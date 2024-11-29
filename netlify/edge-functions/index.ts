@@ -13,11 +13,7 @@ export default async (request: Request) => {
     const response = new Response(fetchData.body, {
       status: fetchData.status,
       headers: {
-        ...Object.fromEntries(fetchData.headers),
-        "Cache-Control": "public,max-age=31536000,s-maxage=31536000,immutable",
-        "Access-Control-Allow-Origin": "*",
-        "CDN-Cache-Control":
-          "public,max-age=31536000,s-maxage=31536000,immutable",
+        "Netlify-CDN-Cache-Control": "public,durable,s-maxage=31536000",
       },
     });
 

@@ -11,7 +11,6 @@ export default async (request: Request) => {
 
     // Clone the response and set custom headers
     const response = new Response(fetchData.body, {
-      status: fetchData.status,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Cache-Control": "public, max-age=31536000",

@@ -17,8 +17,6 @@ export default async (request: Request) => {
         "Cache-Control": "public, max-age=31536000",
         "CDN-Cache-Control": "public, max-age=31536000",
         "Netlify-CDN-Cache-Control": "public, max-age=31536000",
-        "Cache-Tag": "edge-cache",
-        "X-Cache-Status": "MISS", //
       },
     });
 
@@ -29,3 +27,17 @@ export default async (request: Request) => {
     });
   }
 };
+export const config = { path: "/api" };
+
+// import { CacheHeaders } from "cdn-cache-control";
+// import type { Config } from "@netlify/functions";
+
+// export default async function handler(request: Request): Promise<Response> {
+//   const headers = new CacheHeaders();
+
+//   return new Response("Hello, world!", { headers });
+// }
+
+// export const config: Config {
+//   path: "/hello"
+// }

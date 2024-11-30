@@ -27,7 +27,7 @@ export default async (request: Request) => {
     });
   }
 };
-export const config = { path: "/api", cache: "manual" };
+export const config = { path: "/api" };
 
 // import { CacheHeaders } from "cdn-cache-control";
 // import type { Config } from "@netlify/functions";

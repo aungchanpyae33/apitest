@@ -12,6 +12,7 @@ export default async (request: Request) => {
     // Clone the response and set custom headers
     const response = new Response(fetchData.body, {
       headers: {
+        ...Object.fromEntries(fetchData.headers),
         "Access-Control-Allow-Origin": "*",
         "Cache-Control": "public, max-age=31536000",
         "CDN-Cache-Control": "public, max-age=31536000",
@@ -26,7 +27,7 @@ export default async (request: Request) => {
     });
   }
 };
-export const config = { path: "/api" };
+export const config = { path: "/api", cache: "manual" };
 
 // import { CacheHeaders } from "cdn-cache-control";
 // import type { Config } from "@netlify/functions";

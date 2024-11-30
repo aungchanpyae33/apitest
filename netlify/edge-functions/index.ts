@@ -14,7 +14,11 @@ export default async (request: Request) => {
       status: fetchData.status,
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Netlify-CDN-Cache-Control": "public,durable,s-maxage=31536000",
+        "Cache-Control": "public, max-age=31536000",
+        "CDN-Cache-Control": "public, max-age=31536000",
+        "Netlify-CDN-Cache-Control": "public, max-age=31536000",
+        "Cache-Tag": "edge-cache",
+        "X-Cache-Status": "MISS", //
       },
     });
 

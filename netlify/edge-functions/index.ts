@@ -7,11 +7,13 @@ export default async (request: Request) => {
   }
 
   try {
-    // Fetch the data from the output URL
     const fetchData = await fetch(outputUrl);
 
-    // Create a new Headers object and extend it with custom headers
-    const headers = new Headers(fetchData.headers);
+    // Clone the original response to avoid consuming the stream
+    const clonedResponse = fetchData.clone();
+
+    // Create headers
+    const headers = new Headers(clonedResponse.headers);
     headers.set("Access-Control-Allow-Origin", "*");
     headers.set("Cache-Control", "public, max-age=3153, s-maxage=3153");
     headers.set("CDN-Cache-Control", "public, max-age=3153, s-maxage=3153");
@@ -20,9 +22,12 @@ export default async (request: Request) => {
       "public, max-age=3153, s-maxage=3153"
     );
 
-    // Return the response with the updated headers and the original body
-    return new Response(fetchData.body, {
-      status: fetchData.status,
+    // Get the full response body
+    const body = await clonedResponse.arrayBuffer();
+
+    // Create new response with the full body
+    return new Response(body, {
+      status: clonedResponse.status,
       headers,
     });
   } catch (error) {

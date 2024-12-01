@@ -10,7 +10,8 @@ export default async (request: Request) => {
     const fetchData = await fetch(outputUrl);
 
     // Clone the response and set custom headers
-    const response = new Response(fetchData.body, {
+    const body = await fetchData.arrayBuffer();
+    const response = new Response(body, {
       status: fetchData.status,
       headers: {
         ...Object.fromEntries(fetchData.headers),

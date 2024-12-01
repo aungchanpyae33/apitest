@@ -23,6 +23,10 @@ export default async (request: Request) => {
     // Create new headers, extend original headers, and set caching headers
     const headers = new Headers(fetchData.headers);
     headers.set("Access-Control-Allow-Origin", "*");
+    headers.set(
+      "Netlify-CDN-Cache-Control",
+      "public, max-age=315360, s-maxage=315360"
+    );
 
     // Return response with binary data
     return new Response(body, {

@@ -1,4 +1,5 @@
 [[edge_functions]]
+  cache = 'manual'
   function = "index"
   path = "/api"
 

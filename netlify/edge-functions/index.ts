@@ -32,4 +32,4 @@ export default async (request: Request) => {
   }
 };
 
-export const config = { path: "/api", cache: "manual" };
+export const config = { path: "/api" };

@@ -7,21 +7,30 @@ export default async (request: Request) => {
   }
 
   try {
-    // Fetch the data from the output URL
+    // Fetch the audio file as a binary stream
     const fetchData = await fetch(outputUrl);
 
-    // Create a new Headers object and extend it with custom headers
+    // Validate response integrity
+    if (!fetchData.ok) {
+      return new Response(`Failed to fetch resource: ${fetchData.statusText}`, {
+        status: fetchData.status,
+      });
+    }
+
+    // Ensure response body is not prematurely consumed
+    const body = await fetchData.arrayBuffer();
+
+    // Create new headers, extend original headers, and set caching headers
     const headers = new Headers(fetchData.headers);
     headers.set("Access-Control-Allow-Origin", "*");
-    headers.set("Cache-Control", "public, max-age=3153, s-maxage=3153");
-    headers.set("CDN-Cache-Control", "public, max-age=3153, s-maxage=3153");
+    headers.set("Cache-Control", "public, max-age=31536000, s-maxage=31536000");
     headers.set(
       "Netlify-CDN-Cache-Control",
-      "public, max-age=3153, s-maxage=3153"
+      "public, max-age=31536000, s-maxage=31536000"
     );
 
-    // Return the response with the updated headers and the original body
-    return new Response(await fetchData.arrayBuffer(), {
+    // Return response with binary data
+    return new Response(body, {
       status: fetchData.status,
       headers,
     });

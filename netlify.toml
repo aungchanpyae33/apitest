@@ -1,6 +1,6 @@
 [[edge_functions]]
   function = "index"
-  path = "/*"
+  path = "/api"
 
 [[headers]]
   for = "/*" # you can configure the correct paths here

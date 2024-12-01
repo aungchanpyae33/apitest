@@ -11,6 +11,7 @@ export default async (request: Request) => {
 
     // Clone the response and set custom headers
     const response = new Response(fetchData.body, {
+      status: fetchData.status,
       headers: {
         ...Object.fromEntries(fetchData.headers),
         "Access-Control-Allow-Origin": "*",
@@ -28,16 +29,3 @@ export default async (request: Request) => {
   }
 };
 export const config = { path: "/api" };
-
-// import { CacheHeaders } from "cdn-cache-control";
-// import type { Config } from "@netlify/functions";
-
-// export default async function handler(request: Request): Promise<Response> {
-//   const headers = new CacheHeaders();
-
-//   return new Response("Hello, world!", { headers });
-// }
-
-// export const config: Config {
-//   path: "/hello"
-// }

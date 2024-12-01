@@ -15,9 +15,10 @@ export default async (request: Request) => {
       headers: {
         ...Object.fromEntries(fetchData.headers),
         "Access-Control-Allow-Origin": "*",
-        "Cache-Control": "public, max-age=31536000",
-        "CDN-Cache-Control": "public, max-age=31536000",
-        "Netlify-CDN-Cache-Control": "public, max-age=31536000",
+        "Cache-Control": "public, max-age=31536000,s-maxage=31536000",
+        "CDN-Cache-Control": "public, max-age=31536000,s-maxage=31536000",
+        "Netlify-CDN-Cache-Control":
+          "public, max-age=31536000,s-maxage=31536000",
       },
     });
 
@@ -28,4 +29,4 @@ export default async (request: Request) => {
     });
   }
 };
-export const config = { path: "/api" };
+export const config = { path: "/api", cache: "manual" };

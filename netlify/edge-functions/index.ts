@@ -7,26 +7,29 @@ export default async (request: Request) => {
   }
 
   try {
+    // Fetch the data from the output URL
     const fetchData = await fetch(outputUrl);
 
-    // Clone the response and set custom headers
-    const body = await fetchData.arrayBuffer();
-    const response = new Response(body, {
-      status: fetchData.status,
-      headers: {
-        ...Object.fromEntries(fetchData.headers),
-        "Access-Control-Allow-Origin": "*",
-        "Cache-Control": "public, max-age=3153,s-maxage=3153",
-        "CDN-Cache-Control": "public, max-age=3153,s-maxage=3153",
-        "Netlify-CDN-Cache-Control": "public, max-age=3153,s-maxage=3153",
-      },
-    });
+    // Create a new Headers object and extend it with custom headers
+    const headers = new Headers(fetchData.headers);
+    headers.set("Access-Control-Allow-Origin", "*");
+    headers.set("Cache-Control", "public, max-age=3153, s-maxage=3153");
+    headers.set("CDN-Cache-Control", "public, max-age=3153, s-maxage=3153");
+    headers.set(
+      "Netlify-CDN-Cache-Control",
+      "public, max-age=3153, s-maxage=3153"
+    );
 
-    return response;
+    // Return the response with the updated headers and the original body
+    return new Response(fetchData.body, {
+      status: fetchData.status,
+      headers,
+    });
   } catch (error) {
     return new Response(`Error fetching data: ${error.message}`, {
       status: 500,
     });
   }
 };
+
 export const config = { path: "/api", cache: "manual" };
